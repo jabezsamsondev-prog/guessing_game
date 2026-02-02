@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Cipher - Number Guessing Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="background-mesh"></div>
+
+    <div class="app-container">
+      <!-- Start Screen -->
+      <section id="start-screen" class="screen active">
+        <h1 class="game-title">NEON <span class="highlight">CIPHER</span></h1>
+        <p class="subtitle">Crack the hidden code sequence.</p>
+
+        <div class="difficulty-selector">
+          <p class="label">Select Difficulty</p>
+          <div class="difficulty-buttons">
+            <button class="diff-btn" data-level="easy">
+              <span class="diff-name">Easy</span>
+              <span class="diff-info">4 Digits • 10 Chances</span>
+            </button>
+            <button class="diff-btn" data-level="medium">
+              <span class="diff-name">Medium</span>
+              <span class="diff-info">6 Digits • 8 Chances</span>
+            </button>
+            <button class="diff-btn" data-level="hard">
+              <span class="diff-name">Hard</span>
+              <span class="diff-info">8 Digits • 6 Chances</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Game Screen -->
+      <section id="game-screen" class="screen hidden">
+        <header class="game-header">
+          <button id="quit-btn" class="icon-btn" aria-label="Quit Game">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M11 17l-5-5 5-5M18 17l-5-5 5-5" />
+            </svg>
+          </button>
+          <div class="status-bar">
+            <div class="status-item">
+              <span class="label">Chances</span>
+              <span id="chances-display" class="value">10</span>
+            </div>
+          </div>
+          <button id="sound-btn" class="icon-btn" aria-label="Toggle Sound">
+            <svg
+              id="sound-icon-on"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path
+                d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+              ></path>
+            </svg>
+            <svg
+              id="sound-icon-off"
+              class="hidden"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <path
+                d="M9 9v6a3 3 0 0 0 5.12 2.12M15 9.34V4.93a10 10 0 0 1 0 14.14"
+              ></path>
+              <path d="M4.93 19.07a10 10 0 0 1-1.35-4.07h2.24"></path>
+            </svg>
+          </button>
+        </header>
+
+        <div class="game-board">
+          <div class="history-container" id="history-container">
+            <!-- Previous guesses will populate here -->
+            <div class="empty-state">Start guessing to crack the code...</div>
+          </div>
+
+          <div class="input-area">
+            <div class="current-input-row" id="current-input-row">
+              <!-- Dynamic inputs based on difficulty -->
+            </div>
+            <div class="keypad">
+              <div class="key-row">
+                <button class="key" data-val="1">1</button>
+                <button class="key" data-val="2">2</button>
+                <button class="key" data-val="3">3</button>
+              </div>
+              <div class="key-row">
+                <button class="key" data-val="4">4</button>
+                <button class="key" data-val="5">5</button>
+                <button class="key" data-val="6">6</button>
+              </div>
+              <div class="key-row">
+                <button class="key" data-val="7">7</button>
+                <button class="key" data-val="8">8</button>
+                <button class="key" data-val="9">9</button>
+              </div>
+              <div class="key-row">
+                <button class="key action-key" id="clear-btn">C</button>
+                <button class="key" data-val="0">0</button>
+                <button class="key action-key enter-key" id="submit-guess">
+                  ↵
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Result Overlay -->
+      <div id="result-overlay" class="overlay hidden">
+        <div class="result-card">
+          <h2 id="result-title">VICTORY</h2>
+          <div class="code-reveal" id="code-reveal">
+            <!-- Revealed code -->
+          </div>
+          <p id="result-message">You cracked the code!</p>
+          <button id="restart-btn" class="primary-btn">Play Again</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
