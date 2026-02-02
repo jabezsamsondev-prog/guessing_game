@@ -13,6 +13,7 @@
 
   --glow-primary: 0 0 20px rgba(0, 242, 255, 0.5);
   --glow-secondary: 0 0 20px rgba(189, 0, 255, 0.5);
+  --warning: #ffb700;
 }
 
 * {
@@ -20,6 +21,13 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 body {
@@ -65,10 +73,10 @@ body {
 }
 
 @media (min-width: 600px) {
-    .app-container {
-        border-left: 1px solid rgba(255, 255, 255, 0.15);
-        border-right: 1px solid rgba(255, 255, 255, 0.15);
-    }
+  .app-container {
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+  }
 }
 
 /* Screens */
@@ -139,10 +147,10 @@ body {
 }
 
 .difficulty-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap; /* responsive */
-    justify-content: center; /* center them */
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* responsive */
+  justify-content: center; /* center them */
 }
 
 .label {
@@ -156,8 +164,12 @@ body {
 
 .diff-btn {
   flex: 1; /* evenly distribute width */
-  min-width: 120px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  min-width: 160px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 1.5rem 1rem;
   border-radius: 16px;
@@ -173,38 +185,89 @@ body {
   overflow: hidden;
 }
 
-.diff-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 242, 255, 0.05) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.diff-btn:hover::before {
-    opacity: 1;
-}
-
+/* Base hover */
 .diff-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-  border-color: var(--primary);
-  box-shadow: var(--glow-primary);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .diff-btn .diff-name {
   font-family: var(--font-main);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  transition: color 0.3s;
 }
 
 .diff-btn .diff-info {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+
+/* --- Easy Variant --- */
+.diff-btn[data-level="easy"] {
+  border-bottom: 3px solid rgba(0, 255, 157, 0.3);
+}
+
+.diff-btn[data-level="easy"]:hover {
+  border-color: var(--success);
+  box-shadow: 0 10px 20px rgba(0, 255, 157, 0.15);
+}
+
+.diff-btn[data-level="easy"]:hover .diff-name {
+  color: var(--success);
+}
+
+/* --- Medium Variant --- */
+.diff-btn[data-level="medium"] {
+  border-bottom: 3px solid rgba(255, 183, 0, 0.3);
+}
+
+.diff-btn[data-level="medium"]:hover {
+  border-color: var(--warning);
+  box-shadow: 0 10px 20px rgba(255, 183, 0, 0.15);
+}
+
+.diff-btn[data-level="medium"]:hover .diff-name {
+  color: var(--warning);
+}
+
+/* --- Hard Variant --- */
+.diff-btn[data-level="hard"] {
+  border-bottom: 3px solid rgba(255, 0, 85, 0.3);
+}
+
+.diff-btn[data-level="hard"]:hover {
+  border-color: var(--danger);
+  box-shadow: 0 10px 20px rgba(255, 0, 85, 0.15);
+}
+
+.diff-btn[data-level="hard"]:hover .diff-name {
+  color: var(--danger);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .difficulty-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .diff-btn {
+    width: 100%;
+    flex: auto;
+    padding: 1.25rem;
+    flex-direction: row; /* Horizontal layout on mobile */
+    justify-content: space-between; /* push text apart if needed, or align center */
+    align-items: center;
+    text-align: left;
+  }
+
+  .diff-btn .diff-name {
+    margin-bottom: 0;
+    font-size: 1.2rem;
+  }
 }
 
 /* Game Screen */
@@ -326,29 +389,26 @@ body {
   color: var(--text-muted);
 }
 
-/* Input Area */
 .input-area {
   margin-top: auto;
-  background: rgba(20, 20, 35, 0.9);
-  padding: 1.5rem 1rem 1rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px 24px 0 0;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
+  background: rgba(13, 13, 22, 0.85); /* Deeper, distinct background */
+  padding: 2rem; /* Balanced symmetrical padding */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.15); /* Top lighting */
+  border-radius: 32px; /* Rounded all 4 sides */
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05), /* Inner rim */
+    inset 0 0 30px rgba(0, 242, 255, 0.05); /* Cool neon glow highlight */
+  backdrop-filter: blur(20px);
   position: relative;
   z-index: 20;
-}
 
-.input-area::before {
-    content: '';
-    position: absolute;
-    top: 6px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
+  /* Centering Logic */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .current-input-row {
@@ -385,52 +445,79 @@ body {
 }
 
 /* Keypad */
+/* Keypad */
 .keypad {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  padding-bottom: 2rem;
+  gap: 0.8rem;
+  /* padding-bottom removed to let container handle spacing */
+  width: 100%; /* Ensure full width within max-width */
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .key-row {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 
 .key {
-  width: 32%; /* approx 1/3 */
-  max-width: 100px;
-  height: 56px;
-  background: #1a1a24;
-  border: none;
-  border-radius: 12px;
+  flex: 1;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.05); /* Glassy background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   color: var(--text-main);
   font-size: 1.5rem;
   font-family: var(--font-main);
   cursor: pointer;
-  transition: background 0.1s;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.key:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .key:active {
-  background: #2a2a36;
-  transform: scale(0.96);
+  transform: translateY(0) scale(0.96);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .action-key {
-  background: #252530;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  background: rgba(255, 0, 85, 0.1) !important;
+  border-color: rgba(255, 0, 85, 0.3) !important;
+  color: var(--danger);
+}
+
+.action-key:hover {
+  background: rgba(255, 0, 85, 0.2) !important;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.2) !important;
 }
 
 .enter-key {
-  background: var(--primary);
-  color: #000;
-  box-shadow: 0 0 15px var(--primary-dim);
+  background: rgba(0, 242, 255, 0.1) !important;
+  border-color: rgba(0, 242, 255, 0.3) !important;
+  color: var(--primary);
+  font-size: 1.5rem;
 }
 
-.enter-key:active {
-  background: #00dce8;
+.enter-key:hover {
+  background: rgba(0, 242, 255, 0.2) !important;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.2) !important;
+  color: #fff;
 }
 
 /* Overlay */
@@ -477,6 +564,12 @@ body {
   font-weight: 800;
   margin-bottom: 1.5rem;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+#result-message {
+  margin-bottom: 2rem;
+  color: var(--text-muted);
+  font-size: 1.1rem;
 }
 
 .win-text {

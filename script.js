@@ -311,15 +311,15 @@ function endGame(isWin) {
     
     if (isWin) {
         sounds.win();
-        ui.resultTitle.textContent = "VICTORY";
+        ui.resultTitle.textContent = "ACCESS GRANTED";
         ui.resultTitle.className = "win-text";
         ui.resultMessage.textContent = "You cracked the code!";
         fireConfetti();
     } else {
         sounds.lose();
-        ui.resultTitle.textContent = "FAILURE";
+        ui.resultTitle.textContent = "ACCESS DENIED";
         ui.resultTitle.className = "lose-text";
-        ui.resultMessage.textContent = "System locked out.";
+        ui.resultMessage.textContent = "Don't give up! Give it another shot.";
     }
 
     // Reveal Code
